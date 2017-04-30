@@ -1,18 +1,22 @@
 <?php
 
 use Phalcon\Mvc\Application;
-use Phalcon\Config\Adapter\Ini;
+use Phalcon\Di\FactoryDefault;
 
 //error_reporting(E_ALL);
 
-define('APP_PATH', realpath('..'));
+define('APP_PATH', realpath('..') . '/');
+define('MODULES_DIR', APP_PATH . 'apps/modules/');
+define('DS', DIRECTORY_SEPARATOR);
 
 try {
 
+    require_once APP_PATH . 'vendor/autoload.php';
+
     /**
-     * Read the configuration
+     * The FactoryDefault Dependency Injector automatically registers the right services to provide a full stack framework
      */
-    $config = new Ini(APP_PATH  . "/apps/frontend/config/config.ini");
+    $di = new FactoryDefault();
 
     /**
      * Include services

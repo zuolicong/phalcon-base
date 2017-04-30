@@ -3,5 +3,14 @@
         "PHPOffice/PHPExcel": "^1.8",
         "smarty/smarty": "^3.1",
         "phpmailer/phpmailer": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Base\\": "apps/",
+            "Base\\Constants\\": "apps/constants/",
+            "Base\\DataService\\": "apps/dataservice/",
+            "Base\\Lib\\": "apps/library/",
+            "Base\\Models\\": "apps/models/"
+        }
     }
 }

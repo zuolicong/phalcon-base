@@ -10,6 +10,40 @@ class ComposerStaticInitee960e0c654759d5005a2976fdee029f
         'f084d01b0a599f67676cffef638aa95b' => __DIR__ . '/..' . '/smarty/smarty/libs/bootstrap.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'B' => 
+        array (
+            'Base\\Models\\' => 12,
+            'Base\\Lib\\' => 9,
+            'Base\\DataService\\' => 17,
+            'Base\\Constants\\' => 15,
+            'Base\\' => 5,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Base\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/apps/models',
+        ),
+        'Base\\Lib\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/apps/library',
+        ),
+        'Base\\DataService\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/apps/dataservice',
+        ),
+        'Base\\Constants\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/apps/constants',
+        ),
+        'Base\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/apps',
+        ),
+    );
+
     public static $prefixesPsr0 = array (
         'P' => 
         array (
@@ -34,6 +68,8 @@ class ComposerStaticInitee960e0c654759d5005a2976fdee029f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitee960e0c654759d5005a2976fdee029f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitee960e0c654759d5005a2976fdee029f::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitee960e0c654759d5005a2976fdee029f::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitee960e0c654759d5005a2976fdee029f::$classMap;
 
