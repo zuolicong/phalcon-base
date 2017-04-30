@@ -5,31 +5,20 @@
  * @var \Phalcon\Config $config
  */
 
-use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Url as UrlResolver;
-use Phalcon\Di\FactoryDefault;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Mvc\View;
+use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Events\Manager as EventsManager;
 
 /**
- * The FactoryDefault Dependency Injector automatically registers the right services to provide a full stack framework
+ * 设置全局配置文件
  */
-$di = new FactoryDefault();
-
-/**
- * Registering a router
- */
-$di->setShared('router', function () {
-    $router = new Router();
-
-    $router->setDefaultModule('frontend');
-    $router->setDefaultNamespace('Base\Frontend\Controllers');
-
-    return $router;
-});
+$config = new ConfigIni(APP_PATH  . "/apps/config/config.ini");
+$di->setShared('config', $config);
 
 /**
  * The URL component is used to generate all kinds of URLs in the application
@@ -47,8 +36,6 @@ $di->setShared('url', function () use ($config) {
 $di->setShared('view', function () use ($config) {
 
     $view = new View();
-
-    $view->setViewsDir($config->application->viewsDir);
 
     $view->registerEngines(array(
         '.volt' => function ($view, $di) use ($config) {
@@ -111,10 +98,16 @@ $di->set('flash', function () {
 });
 
 /**
-* Set the default namespace for dispatcher
+* Set dispatcher
 */
 $di->setShared('dispatcher', function() use ($di) {
     $dispatcher = new Phalcon\Mvc\Dispatcher();
-    $dispatcher->setDefaultNamespace('Base\Frontend\Controllers');
+    $eventsManager = new EventsManager();
+    $dispatcher->setEventsManager($eventsManager);
     return $dispatcher;
 });
+
+/**
+ * 去掉model非空验证
+ */
+Phalcon\Mvc\Model::setup(['notNullValidations' => false]);

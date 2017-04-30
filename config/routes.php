@@ -1,30 +1,31 @@
 <?php
 
-$router = $di->get("router");
+use Phalcon\Mvc\Router;
 
-foreach ($application->getModules() as $key => $module) {
-    $namespace = str_replace('Module','Controllers', $module["className"]);
-    $router->add('/'.$key.'/:params', array(
-        'namespace' => $namespace,
-        'module' => $key,
-        'controller' => 'index',
-        'action' => 'index',
-        'params' => 1
-    ))->setName($key);
-    $router->add('/'.$key.'/:controller/:params', array(
-        'namespace' => $namespace,
-        'module' => $key,
-        'controller' => 1,
-        'action' => 'index',
-        'params' => 2
-    ));
-    $router->add('/'.$key.'/:controller/:action/:params', array(
-        'namespace' => $namespace,
-        'module' => $key,
-        'controller' => 1,
-        'action' => 2,
-        'params' => 3
-    ));
-}
+/**
+ * Registering a router
+ */
+$modules = $application->getModules();
+$di->setShared('router', function () use ($modules) {
+    // 不使用默认路由
+    $router = new Router(false);
 
-$di->set("router", $router);
+    /**
+     * Remove Extra Slashes
+     * http://docs.phalconphp.com/en/latest/reference/routing.html#dealing-with-extra-trailing-slashes
+     */
+    $router->removeExtraSlashes(true);
+
+    $modules_name = array_keys($modules);
+    $modules_pattern =  sprintf('(%s)', join('|', $modules_name));
+
+    $router->add("/{$modules_pattern}/:controller/:action/:params", array(
+        'module' => 1,
+        'controller' => 2,
+        'action' => 3,
+        'params' => 4,
+    ));
+
+    return $router;
+});
+

@@ -6,10 +6,15 @@
 $application->registerModules([
     'frontend' => [
         'className' => 'Base\Frontend\Module',
-        'path' => '../apps/frontend/Module.php',
+        'path' => '../apps/modules/frontend/Module.php',
     ],
     'backend' => [
         'className' => 'Base\Backend\Module',
-        'path' => '../apps/backend/Module.php',
+        'path' => '../apps/modules/backend/Module.php',
     ],
 ]);
+
+// 设置默认module
+$application->setDefaultModule('frontend');
+
+
