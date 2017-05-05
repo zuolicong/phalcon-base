@@ -5,11 +5,11 @@
  */
 $application->registerModules([
     'frontend' => [
-        'className' => 'Base\Frontend\Module',
+        'className' => 'Base\\Frontend\\Module',
         'path' => '../apps/modules/frontend/Module.php',
     ],
     'backend' => [
-        'className' => 'Base\Backend\Module',
+        'className' => 'Base\\Backend\\Module',
         'path' => '../apps/modules/backend/Module.php',
     ],
 ]);

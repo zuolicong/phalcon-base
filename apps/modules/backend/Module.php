@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Backend;
+namespace Base\Backend;
 
 use Base\Lib\BaseModule;
 

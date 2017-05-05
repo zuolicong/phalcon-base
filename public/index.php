@@ -6,6 +6,7 @@ use Phalcon\Di\FactoryDefault;
 define('APP_PATH', realpath('..') . '/');
 define('MODULES_DIR', APP_PATH . 'apps/modules/');
 define('DS', DIRECTORY_SEPARATOR);
+define('TMP_DIR', APP_PATH . 'tmp/');
 
 try {
 
