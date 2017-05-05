@@ -3,8 +3,6 @@
 use Phalcon\Mvc\Application;
 use Phalcon\Di\FactoryDefault;
 
-//error_reporting(E_ALL);
-
 define('APP_PATH', realpath('..') . '/');
 define('MODULES_DIR', APP_PATH . 'apps/modules/');
 define('DS', DIRECTORY_SEPARATOR);
@@ -41,6 +39,11 @@ try {
     echo $application->handle()->getContent();
 
 } catch (\Exception $e) {
-    echo $e->getMessage() . '<br>';
-    echo '<pre>' . $e->getTraceAsString() . '</pre>';
+    error_log($e->getMessage());
+    error_log($e->getTraceAsString());
+    $response = [
+        'code' => $e->getCode(),
+        'msg' => $e->getMessage(),
+    ];
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }

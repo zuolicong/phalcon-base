@@ -13,6 +13,8 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Logger\Adapter\File as FileLoggerAdapter;
+use Phalcon\Logger\Formatter\Line as LoggerFormatter;
 
 /**
  * 设置全局配置文件
@@ -105,6 +107,22 @@ $di->setShared('dispatcher', function() use ($di) {
     $eventsManager = new EventsManager();
     $dispatcher->setEventsManager($eventsManager);
     return $dispatcher;
+});
+
+/**
+ * 设置日志
+ */
+$di->setShared('log', function () use ($config) {
+    $logDir = $config->application->logDir;
+    if (!file_exists($logDir)) {
+        mkdir($logDir, 0777, true);
+    }
+    $logFile = $logDir . date('Y_m_d') . '.log';
+    $logger = new FileLoggerAdapter($logFile);
+    $formatter = new LoggerFormatter();
+    $formatter->setDateFormat('Y-m-d H:i:s');
+    $logger->setFormatter($formatter);
+    return $logger;
 });
 
 /**
