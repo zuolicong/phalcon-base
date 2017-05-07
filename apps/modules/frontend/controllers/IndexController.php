@@ -9,7 +9,7 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-        phpinfo();
+        $this->view->pick('index/index');
     }
 
     public function testAction() {

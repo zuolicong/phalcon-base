@@ -43,7 +43,7 @@ try {
     error_log($e->getMessage());
     error_log($e->getTraceAsString());
     $response = [
-        'code' => $e->getCode(),
+        'code' => $e->getCode() ? : 1,
         'msg' => $e->getMessage(),
     ];
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

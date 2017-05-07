@@ -1,0 +1,27 @@
+<div class=" {{ if isset($fullwidth) }} {{ else }} container {{ /if }} ">
+    <div class="row row-with-margin-top">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered {{ if isset($name) }}{{ $name }}{{ /if }}" {{ if isset($id) }} id="{{ $id }}" {{ /if }}>
+                {{ if isset($title) }}
+                <caption>{{ $title }}</caption>
+                {{ /if }}
+                <thead>
+                    <tr>
+                        {{ foreach from=$schema key=$k item=$val }}
+                        <th class="th-{{ $k }}">{{ $val }}</th>
+                        {{ /foreach }}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ foreach from=$data item=$e }}
+                    <tr>
+                        {{ foreach from=$schema key=$k item=$val }}
+                        <td class="td-{{ $k }}">{{ array_get($e, $k, '') }}</td>
+                        {{ /foreach }}
+                    </tr>
+                    {{ /foreach }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
